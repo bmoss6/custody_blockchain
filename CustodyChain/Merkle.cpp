@@ -68,8 +68,7 @@ string Merkle::MerkleTree::r_formTree(std::vector<HashPointer> hash_level )
 		return hash_level[0].get_hash();
 	}
 	
-	else
-	{
+
 
 
 		vector<HashPointer> new_level;
@@ -85,8 +84,8 @@ string Merkle::MerkleTree::r_formTree(std::vector<HashPointer> hash_level )
 			new_level.push_back(new_hash);
 		}
 
-		this->r_formTree(new_level);
-	}
+		return r_formTree(new_level);
+		
 
 }
 
@@ -121,6 +120,5 @@ int main()
 	MerkleTree test_tree;
 	addInitialEvidence(test_tree);
 	string root_hash = test_tree.formTree();
-	int t = 1;
 	return 0;
 }
