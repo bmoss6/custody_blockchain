@@ -116,15 +116,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Artifact.h" />
+    <ClInclude Include="crypto_helper.h" />
     <ClInclude Include="Merkle.h" />
     <ClInclude Include="TXIO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Artifact.cpp" />
+    <ClCompile Include="crypto_helper.cpp" />
     <ClCompile Include="Merkle.cpp" />
     <ClCompile Include="TXIO.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets" Condition="Exists('..\packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\openssl-vc141.1.1.0\build\native\openssl-vc141.targets'))" />
+  </Target>
 </Project>
