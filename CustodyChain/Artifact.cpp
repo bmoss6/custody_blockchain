@@ -40,6 +40,7 @@ string Artifact::ArtifactTransaction::get_hash()
 
 bool Artifact::ArtifactTransaction::validate_tx(TXIO::Output output)
 {
+// Taken from https://www.geeksforgeeks.org/tokenizing-a-string-cpp/
 	stringstream tokens(output.return_scriptpubkey());
 	string test;
 	vector<string> toks;
