@@ -38,3 +38,22 @@ string TXIO::Output::get_hash()
 {
 	return this->hash;
 }
+
+int TXIO::Input::return_index()
+{
+	return this->index;
+}
+
+string TXIO::Input::return_prevtx()
+{
+	return this->previous_tx;
+}
+
+string TXIO::Input::return_scriptsig()
+{
+	return this->scriptsig;
+}
+string TXIO::Output::return_scriptpubkey()
+{
+	return this->scriptpubkey;
+}

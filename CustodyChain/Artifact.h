@@ -16,6 +16,9 @@ namespace Artifact
 		bool add_output(TXIO::Output output);
 		string get_hash();
 		string serialize();
+		bool validate_tx(TXIO::Output output);
+		TXIO::Input get_input();
+		TXIO::Output get_output();
 
 	private:
 		std::vector<TXIO::Input> inputs;

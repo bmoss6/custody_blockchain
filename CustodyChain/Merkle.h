@@ -30,6 +30,8 @@ namespace Merkle
 		string formTree();
 		string r_formTree(std::vector<HashPointer> hash_level);
 		bool verify();
+		void addInitialEvidence(MerkleTree &tree, EVP_PKEY *pub_key);
+		vector<Artifact::ArtifactTransaction> return_transactions();
 
 	private:
 		HashPointer* root;

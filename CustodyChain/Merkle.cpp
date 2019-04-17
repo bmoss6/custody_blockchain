@@ -1,5 +1,5 @@
 #include "Merkle.h"
-
+#include <cstdio>
 using namespace Merkle;
 using namespace std;
 
@@ -28,8 +28,8 @@ string Merkle::MerkleTree::formTree()
 
 	// First check to make sure length of transactions is even 
 
-	int transx_size = this->transactions.size();
-	if (transx_size % 2 != 0)
+
+	while (this->transactions.size() % 4 != 0)
 	{
 		Artifact::ArtifactTransaction to_add = this->transactions[0];
 		this->transactions.push_back(to_add);
@@ -51,12 +51,17 @@ string Merkle::MerkleTree::formTree()
 	
 	return root_hash;
 	// Take pairs of transactions and form hash pointer 
-
+	     
 }
 
 bool Merkle::MerkleTree::verify()
 {
 	return false;
+}
+
+vector<Artifact::ArtifactTransaction> Merkle::MerkleTree::return_transactions()
+{
+	return this->transactions;
 }
 
 string Merkle::MerkleTree::r_formTree(std::vector<HashPointer> hash_level )
@@ -102,23 +107,42 @@ string Merkle::HashPointer::set_hash(string hash)
 	return this->hash;
 }
 
-void addInitialEvidence(MerkleTree &tree)
+void Merkle::MerkleTree::addInitialEvidence(MerkleTree &tree, EVP_PKEY *pub_key)
 {
 	// Should add 20 transactions to the merkle tree's tx vector. This represents initial evidence being gathered at
 	// a collection site. 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 20; i++)
 	{
+		BIO *bio_pub;
 		Artifact::ArtifactTransaction artifact = Artifact::ArtifactTransaction::ArtifactTransaction();
-		TXIO::Output output = TXIO::Output::Output("Test"+to_string(i));
+	
+		//bio_pub = BIO_new_file("new_pem.pem", "w");
+		bio_pub = BIO_new(BIO_s_mem());
+		char* pp;
+	
+		
+		
+	//	BIO *bio_out;
+	//	bio_out = BIO_new_fp(stdout, BIO_NOCLOSE);
+		int rc = PEM_write_bio_PUBKEY(bio_pub, pub_key);
+		BIO_flush(bio_pub);
+		BIO_get_mem_data(bio_pub, &pp);
+		char *test = &pp[0];
+		string pub_key = string(&pp[0], strlen(&pp[0]));
+		//string t = string((char *) bio_pub, strlen(*bio_pub));
+		TXIO::Output output = TXIO::Output::Output("Test"+to_string(i)+ "|" + pub_key);
 		artifact.add_output(output);
 		tree.addTransaction(artifact);
 	}
 }
 
-int main() 
+int test() 
 {
-	MerkleTree test_tree;
-	addInitialEvidence(test_tree);
-	string root_hash = test_tree.formTree();
+	MerkleTree *test_tree = new MerkleTree;
+	//test_tree->addInitialEvidence(*test_tree);
+	string root_hash = test_tree->formTree();
+	cout << root_hash << endl;
+	system("pause");
+	delete test_tree;
 	return 0;
 }
