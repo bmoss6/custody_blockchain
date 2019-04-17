@@ -13,3 +13,4 @@ Principles Learned:
 1. Implementing Bitcoin data structures: merkle tree, hash pointer, transactions, blocks.
 2. Using cryptographic libraries to verify signatures, hashing, etc.
 3. Better appreciating the complexity of cryptocurrencies and blockchain applications in general.
+4. Already knew, but reaffirmed: Stack Overflow and similar sites provide invaluable help when it comes to implementation details. 
